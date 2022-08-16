@@ -4,8 +4,14 @@ libwacom is a library to identify Wacom tablets and their model-specific
 features. It provides easy access to information such as "is this a built-in
 on-screen tablet", "what is the size of this model", etc.
 
-This functionality is currently used by e.g. GNOME to map built-in tablets to
-the correct screen.
+**libwacom does not make a tablet work.** libwacom is merely a database with a
+C library wrapper for *information* about a tablet. It has no effect on whether
+that tablet works.
+
+libwacom is currently used by GUI toolkits (GNOME, KDE, others?) to map
+built-in tablets to the correct screen and by libinput to determine configuration
+options such as the left-handed settings. SVG layout files are used to describe
+tablet visually.
 
 # Adding tablet descriptions to libwacom
 
@@ -28,7 +34,7 @@ the tablet is not in that list.
    `/usr/share/libwacom/cintiq-13hd.tablet`)
 2. A new tablet description is enabled by adding and installing a new file with
    a `.tablet` suffix. Once installed the tablet is part of libwacom's
-   database, no rebuild is neccessary
+   database, no rebuild is necessary
 3. The tablet is then available through `libwacom-list-local-devices`
 
 You must update udev after installing the file, see below.
@@ -41,10 +47,12 @@ possible to "backport" that `.tablet` file to the system-provided libwacom.
 ### libwacom 1.10 and newer
 
 Copy the `.tablet` file into `/etc/libwacom` and run the
-`libwacom-update-db` tool:
+`libwacom-update-db` tool. Copy the tablet's `.svg` layout file
+to `/etc/libwacom/layouts`.
 
 ```
 $ cp my-tablet-file-from-upstream.tablet /etc/libwacom/
+$ cp my-tablet-file-layout.svg /etc/libwacom/layouts/
 $ libwacom-update-db /etc/libwacom
 ```
 

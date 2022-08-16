@@ -1,5 +1,5 @@
 project('libwacom', 'c',
-	version: '2.1.0',
+	version: '2.4.0',
 	license: 'MIT/Expat',
 	default_options: [ 'c_std=gnu99', 'warning_level=2' ],
 	meson_version: '>= 0.51.0')
@@ -129,6 +129,7 @@ test('files-in-git',
 pytest = find_program('pytest-3', required: false)
 if pytest.found()
 	test('pytests', pytest,
+	     args: ['-vv', '--log-level=DEBUG'],
 	     workdir: meson.current_source_dir(),
 	     env: ['LIBWACOM_DATA_DIR=@0@'.format(dir_src_data)])
 endif
